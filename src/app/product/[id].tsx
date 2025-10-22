@@ -5,7 +5,7 @@ import { PRODUCTS } from "@/utils/data/products"
 import { formatCurrency } from "@/utils/functions/format-currency"
 import { Feather } from "@expo/vector-icons"
 import { useLocalSearchParams, useNavigation } from "expo-router"
-import { Image, Text, View } from "react-native"
+import { Alert, Image, Text, View } from "react-native"
 
 export default function Product() {
   const { id } = useLocalSearchParams()
@@ -15,6 +15,7 @@ export default function Product() {
 
   function handleAddToCart() {
     cartStore.add(product)
+    Alert.alert("Sucesso", "Produto adicionado ao carrinho!")
     navigation.goBack()
   }
 
