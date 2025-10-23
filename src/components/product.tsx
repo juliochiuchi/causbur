@@ -1,3 +1,4 @@
+import { Feather } from "@expo/vector-icons";
 import { forwardRef } from "react";
 import {
   Image,
@@ -7,6 +8,7 @@ import {
   TouchableOpacityProps,
   View
 } from "react-native";
+import colors from "tailwindcss/colors";
 
 type ProductDataProps = {
   title: string,
@@ -17,14 +19,16 @@ type ProductDataProps = {
 
 type ProductProps = TouchableOpacityProps & {
   data: ProductDataProps,
+  onIncrement?: () => void,
+  onDecrement?: () => void,
 }
 
-export const Product = forwardRef<typeof TouchableOpacity, ProductProps>(({ data, ...rest }, ref) => {
+export const Product = forwardRef<typeof TouchableOpacity, ProductProps>(({ data, onIncrement, onDecrement, ...rest }, ref) => {
   return (
     <TouchableOpacity
-    ref={ref as React.Ref<View>}
-    className="w-full flex-row items-center pb-4"
-    {...rest}
+      ref={ref as React.Ref<View>}
+      className="w-full flex-row items-center pb-4"
+      {...rest}
     >
       <Image source={data.thumbnail} className="w-20 h-20 rounded-md" />
       <View className="flex-1 ml-3">
@@ -32,14 +36,30 @@ export const Product = forwardRef<typeof TouchableOpacity, ProductProps>(({ data
           <Text className="text-causbur-text-title-item font-subtitle text-base flex-1">
             {data.title}
           </Text>
-          
-          {data.quantity && (
-            <Text className="text-causbur-text-quantity font-subtitle text-sm">
-              x {data.quantity || 0}
-            </Text>
+
+          {onIncrement && onDecrement ? (
+            <View className="flex-row items-center gap-2">
+              <TouchableOpacity onPress={onDecrement} className="p-1">
+                <Feather name="minus-circle" size={18} color={colors.lime[700]} />
+              </TouchableOpacity>
+
+              <Text className="text-causbur-text-quantity font-subtitle text-sm">
+                x {data.quantity || 0}
+              </Text>
+
+              <TouchableOpacity onPress={onIncrement} className="p-1">
+                <Feather name="plus-circle" size={18} color={colors.lime[700]} />
+              </TouchableOpacity>
+            </View>
+          ) : (
+            data.quantity && (
+              <Text className="text-causbur-text-quantity font-subtitle text-sm">
+                x {data.quantity || 0}
+              </Text>
+            )
           )}
         </View>
-        
+
         <Text className="text-causbur-text-description-item text-xs leading-5 mt-0.5">{data.description}</Text>
       </View>
     </TouchableOpacity>

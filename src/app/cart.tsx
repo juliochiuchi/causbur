@@ -21,13 +21,6 @@ export default function Cart() {
     .products
     .reduce((total, product) => total + product.price * product.quantity, 0))
 
-  function handleRemoveProduct(product: ProductCartProps) {
-    Alert.alert('Remover', `Deseja remover ${product.title} do carrinho?`, [
-      { text: 'Cancelar' },
-      { text: 'Confirmar', onPress: () => cartStore.remove(product.id) },
-    ])
-  }
-
   function handleOrder() {
     if (address.trim().length === 0) return Alert.alert('Pedido', 'Informe os dados da entrega.')
 
@@ -63,7 +56,12 @@ export default function Cart() {
                 <View className="border-b border-causbur-border-divider">
                   {
                     cartStore.products.map((product) => (
-                      <Product key={product.id} data={product} onPress={() => handleRemoveProduct(product)} />
+                      <Product
+                        key={product.id}
+                        data={product}
+                        onIncrement={() => cartStore.add(product)}
+                        onDecrement={() => cartStore.remove(product.id)}
+                      />
                     ))
                   }
                 </View>
