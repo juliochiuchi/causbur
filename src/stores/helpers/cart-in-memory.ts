@@ -1,7 +1,7 @@
 import { ProductProps } from "@/utils/data/products";
 import { ProductCartProps } from "../cart-store-";
 
-export function add(products: ProductCartProps[], newProduct: ProductProps) {
+export function add(products: ProductCartProps[], newProduct: ProductProps, note?: string) {
   const existingProduct = products.find((product) => product.id === newProduct.id)
 
   if (existingProduct) {
@@ -10,7 +10,7 @@ export function add(products: ProductCartProps[], newProduct: ProductProps) {
     : product
   )}
 
-  return [...products, { ... newProduct, quantity: 1 }]
+  return [...products, { ... newProduct, quantity: 1, note }]
 }
 
 export function remove(products: ProductCartProps[], productRemoveId: string) {

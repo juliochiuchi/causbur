@@ -17,6 +17,7 @@ type ProductDataProps = {
   thumbnail: ImageProps,
   quantity?: number,
   price: number,
+  note?: string,
 }
 
 type ProductProps = TouchableOpacityProps & {
@@ -29,7 +30,7 @@ export const Product = forwardRef<typeof TouchableOpacity, ProductProps>(({ data
   return (
     <TouchableOpacity
       ref={ref as React.Ref<View>}
-      className="w-full flex-row items-center pb-4"
+      className="w-full flex-row pb-4"
       {...rest}
     >
       <Image source={data.thumbnail} className="w-20 h-20 rounded-md" />
@@ -62,8 +63,13 @@ export const Product = forwardRef<typeof TouchableOpacity, ProductProps>(({ data
           )}
         </View>
 
-        <Text className="text-causbur-text-description-item text-xs leading-5 mt-0.5">{data.description}</Text>
-        <Text className="text-causbur-text-value-total text-xs leading-5 mt-0.5">{formatCurrency(data.price * (data.quantity || 0))}</Text>
+         <Text className="text-causbur-text-description-item text-xs leading-5 mt-0.5">{data.description}</Text>
+        {data.note && (
+          <Text className="text-causbur-text-description-item text-xs leading-5 mt-0.5">Obs: {data.note}</Text>
+        )}
+        {data.price && data.quantity && (
+          <Text className="text-causbur-text-value-total text-xs leading-5 mt-0.5">{formatCurrency(data.price * (data.quantity || 0))}</Text>
+        )}
       </View>
     </TouchableOpacity>
   )
