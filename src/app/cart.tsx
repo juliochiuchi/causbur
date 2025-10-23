@@ -60,7 +60,7 @@ export default function Cart() {
           <View className="p-5 flex-1">
             {
               cartStore.products.length > 0 ? (
-                <View className="border-b border-slate-700">
+                <View className="border-b border-causbur-border-divider">
                   {
                     cartStore.products.map((product) => (
                       <Product key={product.id} data={product} onPress={() => handleRemoveProduct(product)} />
@@ -68,19 +68,19 @@ export default function Cart() {
                   }
                 </View>
               ) : (
-                <Text className="font-body text-slate-400 text-center my-8">
+                <Text className="font-body text-causbur-text-informative text-center my-8">
                   Seu carrinho está vazio.
                 </Text>
               )
             }
 
             <View className="flex-row gap-2 items-center justify-end mt-5 mb-5">
-              <Text className="text-white text-xl font-subtitle">Total:</Text>
-              <Text className="text-lime-400 text-2xl font-heading">{total}</Text>
+              <Text className="text-causbur-text-total text-xl font-subtitle">Total:</Text>
+              <Text className="text-causbur-text-value-total text-2xl font-heading">{total}</Text>
             </View>
 
             <Input 
-              placeholder="Informe o endereço de entrega: Rua A, 123" 
+              placeholder="Informe o endereço de entrega: Rua Abc, 123"
               onChangeText={(value) => setAddress(value)}
             />
           </View>

@@ -34,7 +34,7 @@ export const Product = forwardRef<typeof TouchableOpacity, ProductProps>(({ data
           </Text>
           
           {data.quantity && (
-            <Text className="text-slate-400 font-subtitle text-sm">
+            <Text className="text-causbur-text-quantity font-subtitle text-sm">
               x {data.quantity || 0}
             </Text>
           )}
