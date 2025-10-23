@@ -1,3 +1,4 @@
+import { formatCurrency } from "@/utils/functions/format-currency";
 import { Feather } from "@expo/vector-icons";
 import { forwardRef } from "react";
 import {
@@ -15,6 +16,7 @@ type ProductDataProps = {
   description: string,
   thumbnail: ImageProps,
   quantity?: number,
+  price: number,
 }
 
 type ProductProps = TouchableOpacityProps & {
@@ -61,6 +63,7 @@ export const Product = forwardRef<typeof TouchableOpacity, ProductProps>(({ data
         </View>
 
         <Text className="text-causbur-text-description-item text-xs leading-5 mt-0.5">{data.description}</Text>
+        <Text className="text-causbur-text-value-total text-xs leading-5 mt-0.5">{formatCurrency(data.price * (data.quantity || 0))}</Text>
       </View>
     </TouchableOpacity>
   )

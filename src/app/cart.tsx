@@ -3,7 +3,7 @@ import { Header } from "@/components/header";
 import { Input } from "@/components/input";
 import { LinkButton } from "@/components/link-button";
 import { Product } from "@/components/product";
-import { ProductCartProps, useCartStore } from "@/stores/cart-store-";
+import { useCartStore } from "@/stores/cart-store-";
 import { formatCurrency } from "@/utils/functions/format-currency";
 import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "expo-router";
@@ -17,11 +17,15 @@ export default function Cart() {
   const navigation = useNavigation()
   const [address, setAddress] = useState('')
   const cartStore = useCartStore()
+  const totalValue = cartStore
+    .products
+    .reduce((total, product) => total + product.price * product.quantity, 0)
   const total = formatCurrency(cartStore
     .products
     .reduce((total, product) => total + product.price * product.quantity, 0))
 
   function handleOrder() {
+    if (totalValue === 0) return Alert.alert('Pedido', 'Adicione produtos ao carrinho.')
     if (address.trim().length === 0) return Alert.alert('Pedido', 'Informe os dados da entrega.')
 
     const products = cartStore.products
