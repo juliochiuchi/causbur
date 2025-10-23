@@ -11,7 +11,7 @@ import { useState } from "react";
 import { Alert, Linking, ScrollView, Text, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
-const PHONE_NUMBER = "phone hereß"
+const PHONE_NUMBER = "5517997855108"
 
 export default function Cart() {
   const navigation = useNavigation()
@@ -19,10 +19,11 @@ export default function Cart() {
   const cartStore = useCartStore()
   const totalValue = cartStore
     .products
-    .reduce((total, product) => total + product.price * product.quantity, 0)
-  const total = formatCurrency(cartStore
-    .products
-    .reduce((total, product) => total + product.price * product.quantity, 0))
+    .reduce((total, product) => {
+      const additionsTotal = (product.additions || []).reduce((sum, a) => sum + a.price, 0)
+      return total + (product.price + additionsTotal) * product.quantity
+    }, 0)
+  const total = formatCurrency(totalValue)
 
   function handleOrder() {
     if (totalValue === 0) return Alert.alert('Pedido', 'Adicione produtos ao carrinho.')
@@ -61,10 +62,10 @@ export default function Cart() {
                   {
                     cartStore.products.map((product) => (
                       <Product
-                        key={product.id}
+                        key={product.cartItemKey}
                         data={product}
                         onIncrement={() => cartStore.add(product)}
-                        onDecrement={() => cartStore.remove(product.id)}
+                        onDecrement={() => cartStore.remove(product.cartItemKey)}
                       />
                     ))
                   }

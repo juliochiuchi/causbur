@@ -137,4 +137,16 @@ const CATEGORIES = MENU.map((item) => item.title)
 
 type ProductProps = (typeof PRODUCTS)[0]
 
-export { MENU, PRODUCTS, CATEGORIES, ProductProps }
+type AdditionalItemProps = {
+  name: string,
+  price: number,
+}
+
+const ADDITIONAL_ITEMS: AdditionalItemProps[] = [
+  { name: "Bacon extra", price: 4.0 },
+  { name: "Cheddar extra", price: 3.0 },
+  { name: "Molho especial", price: 2.5 },
+  { name: "Picles extra", price: 2.0 },
+]
+
+export { MENU, PRODUCTS, CATEGORIES, ProductProps, ADDITIONAL_ITEMS, AdditionalItemProps }

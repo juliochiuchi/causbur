@@ -18,6 +18,7 @@ type ProductDataProps = {
   quantity?: number,
   price: number,
   note?: string,
+  additions?: { name: string, price: number }[],
 }
 
 type ProductProps = TouchableOpacityProps & {
@@ -63,12 +64,19 @@ export const Product = forwardRef<typeof TouchableOpacity, ProductProps>(({ data
           )}
         </View>
 
-         <Text className="text-causbur-text-description-item text-xs leading-5 mt-0.5">{data.description}</Text>
+        <Text className="text-causbur-text-description-item text-xs leading-5 mt-0.5">{data.description}</Text>
         {data.note && (
           <Text className="text-causbur-text-description-item text-xs leading-5 mt-0.5">Obs: {data.note}</Text>
         )}
+        {data.additions && data.additions.length > 0 && (
+          <Text className="text-causbur-text-description-item text-xs leading-5 mt-0.5">
+            Adicionais: {data.additions.map((a) => a.name).join(", ")}
+          </Text>
+        )}
         {data.price && data.quantity && (
-          <Text className="text-causbur-text-value-total text-xs leading-5 mt-0.5">{formatCurrency(data.price * (data.quantity || 0))}</Text>
+          <Text className="text-causbur-text-value-total text-xs leading-5 mt-0.5">
+            {formatCurrency(((data.price + (data.additions?.reduce((sum, a) => sum + a.price, 0) || 0)) * (data.quantity || 0)))}
+          </Text>
         )}
       </View>
     </TouchableOpacity>
