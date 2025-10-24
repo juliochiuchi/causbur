@@ -15,24 +15,25 @@ export default function Product() {
   const { id } = useLocalSearchParams()
   const cartStore = useCartStore()
   const navigation = useNavigation()
-  const product = PRODUCTS.find((item) => { return item.id === id})
+  const product = PRODUCTS.find((item) => { return item.id === id })
   const [note, setNote] = useState('')
   const [selectedAdditions, setSelectedAdditions] = useState<AdditionalItemProps[]>([])
 
   function handleAddToCart() {
-    if(product) {
+    if (product) {
       cartStore.add(product, note, selectedAdditions)
       Alert.alert("Sucesso", "Produto adicionado ao carrinho!")
       navigation.goBack()
     }
   }
 
-  if(!product)
+  if (!product)
     return <Redirect href="/" />
 
   return (
     <View className="flex-1 pt-6">
-      <Image source={product?.cover} className="w-full h-52" resizeMode="cover" />
+      <Image source={product?.cover} className="w-full h-52 rounded-t-2xl" resizeMode="cover" />
+      
       <KeyboardAwareScrollView
         showsVerticalScrollIndicator={false}
         extraHeight={100}
@@ -40,7 +41,7 @@ export default function Product() {
         <ScrollView>
           <View className="p-5 mt-8 flex-1">
             <Text className="text-causbur-text-title-item text-xl font-heading">{product.title}</Text>
-            
+
             <Text className="text-causbur-text-price-item text-2xl font-heading my-2">
               {formatCurrency(product?.price || 0)}
             </Text>
@@ -101,7 +102,7 @@ export default function Product() {
           <Button.Icon>
             <Feather name="plus-circle" size={20} />
           </Button.Icon>
-          
+
           <Button.Text>Adicionar</Button.Text>
         </Button>
 
